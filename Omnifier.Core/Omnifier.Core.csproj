@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="Models\OmniTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

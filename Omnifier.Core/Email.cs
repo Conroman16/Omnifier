@@ -12,13 +12,9 @@ namespace Omnifier.Core
 
 	public static class Email
 	{
-		private static string ApiUrl => "https://api.mailgun.net/v3/";
-		private static string ApiKey => "key-fd4aa938409a3062fae4174209749a08";
-		private static string DomainName => "sandbox127.mailgun.org";
-		private static string Sender => $"Conroman16 <omnifier@{DomainName}>";
-		private static string Recipient => "conroman16.y385a@sync.omnigroup.com";
+		private const string ApiUrl = "https://api.mailgun.net/v3/";
 
-		public static IRestResponse<EmailResponse> SendEmail(string itemName, string itemNotes)
+		public static IRestResponse<EmailResponse> SendEmail(string itemName, string itemNotes = " ")
 		{
 			var request = new RestRequest
 			{
@@ -26,18 +22,16 @@ namespace Omnifier.Core
 				Resource = "{domain}/messages"
 			};
 
-			request.AddParameter("domain", DomainName, ParameterType.UrlSegment);
-			request.AddParameter("from", Sender);
-			request.AddParameter("to", Recipient);
+			request.AddParameter("domain", Config.MailgunDomainName, ParameterType.UrlSegment);
+			request.AddParameter("from", Config.LocalSenderEmail);
+			request.AddParameter("to", Config.OmniSyncEmail);
 			request.AddParameter("subject", itemName);
-			
-			if (itemNotes != null)
-				request.AddParameter("text", itemNotes);
+			request.AddParameter("text", string.IsNullOrEmpty(itemNotes) ? " " : itemNotes);
 
 			var client = new RestClient
 			{
 				BaseUrl = new Uri(ApiUrl),
-				Authenticator = new HttpBasicAuthenticator("api", ApiKey)
+				Authenticator = new HttpBasicAuthenticator("api", Config.MailgunApiKey)
 			};
 
 			return client.Execute<EmailResponse>(request);
