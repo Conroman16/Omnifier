@@ -9,7 +9,7 @@ namespace Omnifier.Core.Models
 		public bool Submit()
 		{
 			var response = Email.SendEmail(Name, Notes);
-			return (response.Data.message ?? "").ToLower().Contains("queued");
+			return (response.Data?.message ?? "").ToLower().Contains("queued");
 		}
 
 		public OmniTask() { }

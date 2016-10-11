@@ -12,7 +12,7 @@ namespace Omnifier.Core
 			{
 				return Get(nameof(MailgunDomainName));
 			}
-			private set
+			set
 			{
 				Set(nameof(MailgunDomainName), value);
 			}
@@ -22,9 +22,9 @@ namespace Omnifier.Core
 		{
 			get
 			{
-					return Get(nameof(MailgunApiKey));
+				return Get(nameof(MailgunApiKey));
 			}
-			private set
+			set
 			{
 				Set(nameof(MailgunApiKey), value);
 			}
@@ -36,7 +36,7 @@ namespace Omnifier.Core
 			{
 				return Get(nameof(OmniSyncEmail));
 			}
-			private set
+			set
 			{
 				Set(nameof(OmniSyncEmail), value);
 			}

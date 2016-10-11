@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Omnifier.UI.Models;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Omnifier.UI
 {
@@ -19,9 +9,37 @@ namespace Omnifier.UI
 	/// </summary>
 	public partial class Settings : Window
 	{
-		public Settings()
+		private static SettingsModel Model { get; set; }
+
+		public Settings(SettingsModel settings)
 		{
 			InitializeComponent();
+			Model = settings;
+			PopulateWindow();
+		}
+
+		private void PopulateWindow()
+		{
+			txtMailgunApiKey.Text = Model.MailgunApiKey;
+			txtMailgunDomain.Text = Model.MailgunDomainName;
+			txtOmniSyncEmail.Text = Model.OmniSyncEmail;
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			MainWindow.SettingsOpen = false;
+			base.OnClosed(e);
+		}
+
+		private void btnSave_Click(object sender, RoutedEventArgs e)
+		{
+			Model.MailgunApiKey = txtMailgunApiKey.Text;
+			Model.MailgunDomainName = txtMailgunDomain.Text;
+			Model.OmniSyncEmail = txtOmniSyncEmail.Text;
+
+			Model.Save();
+
+			Close();
 		}
 	}
 }
